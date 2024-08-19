@@ -9,12 +9,19 @@ const levels = {
     hard: 1
 };
 
+const difficultys = {
+    easy: 'easy',
+    medium: 'medium',
+    hard: 'hard'
+};
+
 // to change level 
-const currentLevel = levels.hard;
+let currentLevel = levels.easy;
+let currentDifficulty = difficultys.easy;
 
 let time = currentLevel;
 let score = 0;
-let highScore = 0;
+// let highScore = 0;
 let isPlaying;
 
 // DOM elements
@@ -24,8 +31,8 @@ const scoreDisplay = document.querySelector('#score');
 const timeDisplay = document.querySelector('#time');
 const message = document.querySelector('#message');
 const seconds = document.querySelector('#seconds');
-const highScoreDisplay = document.querySelector('#highscore');
-const topText = document.querySelector('#lead');
+// const highScoreDisplay = document.querySelector('#highscore');
+const difficulty = document.querySelector('#difficulty');
 
 const words = [
     'hello',
@@ -123,10 +130,29 @@ function countdown() {
     timeDisplay.innerHTML = time;
 }
 
-// check game status
+// check game status and difficulty
 function checkStatus() {
     if (!isPlaying && time === 0) {
         message.innerHTML = 'Game Over!';
         score = -1;
+
+        if (difficulty.value !== currentDifficulty) {
+            currentDifficulty = difficulty.value;
+    
+            switch(currentDifficulty) {
+                case 'easy':
+                    currentLevel = levels.easy;
+                    break;
+                case 'medium':
+                    currentLevel = levels.medium;
+                    break;
+                case 'hard':
+                    currentLevel = levels.hard;
+                    break;
+                default:
+                    console.log('difficulty is undefined');
+                    break;
+            };
+        }
     }
 }
