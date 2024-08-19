@@ -35,7 +35,8 @@ const seconds = document.querySelector('#seconds');
 const difficulty = document.querySelector('#difficulty');
 const topText = document.querySelector('.lead');
 
-const originalTopText = topText.innerHTML;
+const originalTopText = `<p class="lead">Type The Given Word Within
+          <span class="text-success" id="seconds">5</span> Seconds:</p>`;
 
 const words = [
     'hello',
@@ -152,20 +153,20 @@ function checkStatus() {
             switch(currentDifficulty) {
                 case 'easy':
                     currentLevel = levels.easy;
+                    seconds.innerHTML = currentLevel;
                     break;
                 case 'medium':
                     currentLevel = levels.medium;
+                    seconds.innerHTML = currentLevel;
                     break;
                 case 'hard':
                     currentLevel = levels.hard;
+                    seconds.innerHTML = currentLevel;
                     break;
                 default:
                     console.log('difficulty is undefined');
                     break;
             };
-            console.log(currentLevel);
-            seconds.innerHTML = currentLevel;
-            console.log(seconds.innerHTML);
         }
 
         topText.innerHTML = 'Type "start" to start again';
