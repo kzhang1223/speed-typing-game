@@ -33,6 +33,9 @@ const message = document.querySelector('#message');
 const seconds = document.querySelector('#seconds');
 // const highScoreDisplay = document.querySelector('#highscore');
 const difficulty = document.querySelector('#difficulty');
+const topText = document.querySelector('.lead');
+
+const originalTopText = topText.innerHTML;
 
 const words = [
     'hello',
@@ -64,21 +67,23 @@ const words = [
 
 // Initialize game
 function init() {
-    // show number of seconds in ui
-    seconds.innerHTML = currentLevel;
-    
-    // load word from array
-    showWord(words);
+    // start screen
+    topText.innerHTML = 'Type "start" to start again';
+    currentWord.innerHTML = 'start';
 
     // start matching on word input 
     wordInput.addEventListener('input', startMatch);
 
+    // show number of seconds in ui
+    seconds.innerHTML = currentLevel;
+    
     // call countdown every second
     setInterval(countdown, 1000);
 
     // check game status
     setInterval(checkStatus, 50);
 };
+
 
 // start match
 function startMatch() {
@@ -87,7 +92,7 @@ function startMatch() {
         time = currentLevel + 1;
         showWord(words);
         wordInput.value = '';
-        score++;   
+        score++;
     }
     if (score === -1) {
         scoreDisplay.innerHTML = 0;
@@ -99,7 +104,12 @@ function startMatch() {
 // match current word to word input
 function matchWords() {
     if (wordInput.value === currentWord.innerHTML) {
-        message.innerHTML = 'Correct!';
+        if (currentWord.innerHTML !== 'start') {
+            message.innerHTML = 'Correct!';
+        } else {
+            topText.innerHTML = originalTopText;
+            message.innerHTML = 'Go!';
+        }
         return true;
     } else {
         message.innerHTML = '';
@@ -153,6 +163,12 @@ function checkStatus() {
                     console.log('difficulty is undefined');
                     break;
             };
+            console.log(currentLevel);
+            seconds.innerHTML = currentLevel;
+            console.log(seconds.innerHTML);
         }
+
+        topText.innerHTML = 'Type "start" to start again';
+        currentWord.innerHTML = 'start';
     }
 }
