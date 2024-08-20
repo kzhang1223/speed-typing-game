@@ -137,6 +137,9 @@ function countdown() {
         if (time <= 3) {
             timeLeft.style.color = 'red';
             timeDisplay.style.color = 'red';
+        } else {
+            timeLeft.style.color = 'black';
+            timeDisplay.style.color = 'black';
         }
     } else if (time === 0) {
         // game over
