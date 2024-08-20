@@ -35,8 +35,7 @@ const seconds = document.querySelector('#seconds');
 const difficulty = document.querySelector('#difficulty');
 const topText = document.querySelector('.lead');
 
-const originalTopText = `<p class="lead">Type The Given Word Within
-          <span class="text-success" id="seconds">5</span> Seconds:</p>`;
+let originalTopText = 'Type The Given Word Within ' + seconds.innerHTML + ' Seconds:';
 
 const words = [
     'hello',
@@ -77,9 +76,6 @@ function init() {
 
     // show number of seconds in ui
     seconds.innerHTML = currentLevel;
-    
-    // call countdown every second
-    setInterval(countdown, 1000);
 
     // check game status
     setInterval(checkStatus, 50);
@@ -108,6 +104,8 @@ function matchWords() {
         if (currentWord.innerHTML !== 'start') {
             message.innerHTML = 'Correct!';
         } else {
+            // call countdown every second
+            setInterval(countdown, 1000);
             topText.innerHTML = originalTopText;
             message.innerHTML = 'Go!';
         }
@@ -154,14 +152,17 @@ function checkStatus() {
                 case 'easy':
                     currentLevel = levels.easy;
                     seconds.innerHTML = currentLevel;
+                    originalTopText = 'Type The Given Word Within ' + seconds.innerHTML + ' Seconds:';
                     break;
                 case 'medium':
                     currentLevel = levels.medium;
                     seconds.innerHTML = currentLevel;
+                    originalTopText = 'Type The Given Word Within ' + seconds.innerHTML + ' Seconds:';
                     break;
                 case 'hard':
                     currentLevel = levels.hard;
                     seconds.innerHTML = currentLevel;
+                    originalTopText = 'Type The Given Word Within ' + seconds.innerHTML + ' Seconds:';
                     break;
                 default:
                     console.log('difficulty is undefined');
