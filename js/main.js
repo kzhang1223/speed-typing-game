@@ -34,6 +34,7 @@ const seconds = document.querySelector('#seconds');
 // const highScoreDisplay = document.querySelector('#highscore');
 const difficulty = document.querySelector('#difficulty');
 const topText = document.querySelector('.lead');
+const timeLeft = document.querySelector('#time-left');
 
 let originalTopText = 'Type The Given Word Within ' + seconds.innerHTML + ' Seconds:';
 
@@ -103,10 +104,12 @@ function matchWords() {
     if (wordInput.value === currentWord.innerHTML) {
         if (currentWord.innerHTML !== 'start') {
             message.innerHTML = 'Correct!';
+            message.style.color = 'green';
         } else {
             // call countdown every second
             setInterval(countdown, 1000);
             topText.innerHTML = originalTopText;
+            message.style.color = 'green';
             message.innerHTML = 'Go!';
         }
         return true;
@@ -131,6 +134,10 @@ function countdown() {
     if (time > 0) {
         // decrement
         time--;
+        if (time <= 3) {
+            timeLeft.style.color = 'red';
+            timeDisplay.style.color = 'red';
+        }
     } else if (time === 0) {
         // game over
         isPlaying = false;
@@ -143,6 +150,9 @@ function countdown() {
 function checkStatus() {
     if (!isPlaying && time === 0) {
         message.innerHTML = 'Game Over!';
+        message.style.color = 'red';
+        timeLeft.style.color = 'black';
+        timeDisplay.style.color = 'black';
         score = -1;
 
         if (difficulty.value !== currentDifficulty) {
