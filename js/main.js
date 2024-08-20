@@ -15,9 +15,18 @@ const difficultys = {
     hard: 'hard'
 };
 
+const modes = {
+    animals: 'animals',
+    fruits: 'fruits',
+    random: 'random'
+};
+
 // to change level 
 let currentLevel = levels.easy;
 let currentDifficulty = difficultys.easy;
+
+// to change mode 
+let currentMode = modes.random;
 
 let time = currentLevel;
 let score = 0;
@@ -35,6 +44,7 @@ const seconds = document.querySelector('#seconds');
 const difficulty = document.querySelector('#difficulty');
 const topText = document.querySelector('.lead');
 const timeLeft = document.querySelector('#time-left');
+const mode = document.querySelector('#mode');
 
 let originalTopText = 'Type The Given Word Within ' + seconds.innerHTML + ' Seconds:';
 
@@ -86,11 +96,13 @@ function init() {
 // start match
 function startMatch() {
     if (matchWords()) {
+        if (currentWord.innerHTML !== 'start') {
+            score++;
+        }
         isPlaying = true;
         time = currentLevel + 1;
         showWord(words);
         wordInput.value = '';
-        score++;
     }
     if (score === -1) {
         scoreDisplay.innerHTML = 0;
@@ -149,6 +161,37 @@ function countdown() {
     timeDisplay.innerHTML = time;
 }
 
+function checkDifficulty() {
+    if (difficulty.value !== currentDifficulty) {
+        currentDifficulty = difficulty.value;
+
+        switch(currentDifficulty) {
+            case 'easy':
+                currentLevel = levels.easy;
+                seconds.innerHTML = currentLevel;
+                originalTopText = 'Type The Given Word Within ' + seconds.innerHTML + ' Seconds:';
+                break;
+            case 'medium':
+                currentLevel = levels.medium;
+                seconds.innerHTML = currentLevel;
+                originalTopText = 'Type The Given Word Within ' + seconds.innerHTML + ' Seconds:';
+                break;
+            case 'hard':
+                currentLevel = levels.hard;
+                seconds.innerHTML = currentLevel;
+                originalTopText = 'Type The Given Word Within ' + seconds.innerHTML + ' Seconds:';
+                break;
+            default:
+                console.log('difficulty is undefined');
+                break;
+        };
+    }
+}
+
+// function checkMode() {
+//     if ()
+// }
+
 // check game status and difficulty
 function checkStatus() {
     if (!isPlaying && time === 0) {
@@ -158,30 +201,9 @@ function checkStatus() {
         timeDisplay.style.color = 'black';
         score = -1;
 
-        if (difficulty.value !== currentDifficulty) {
-            currentDifficulty = difficulty.value;
-    
-            switch(currentDifficulty) {
-                case 'easy':
-                    currentLevel = levels.easy;
-                    seconds.innerHTML = currentLevel;
-                    originalTopText = 'Type The Given Word Within ' + seconds.innerHTML + ' Seconds:';
-                    break;
-                case 'medium':
-                    currentLevel = levels.medium;
-                    seconds.innerHTML = currentLevel;
-                    originalTopText = 'Type The Given Word Within ' + seconds.innerHTML + ' Seconds:';
-                    break;
-                case 'hard':
-                    currentLevel = levels.hard;
-                    seconds.innerHTML = currentLevel;
-                    originalTopText = 'Type The Given Word Within ' + seconds.innerHTML + ' Seconds:';
-                    break;
-                default:
-                    console.log('difficulty is undefined');
-                    break;
-            };
-        }
+        checkDifficulty();
+
+        checkMode();
 
         topText.innerHTML = 'Type "start" to start again';
         currentWord.innerHTML = 'start';
